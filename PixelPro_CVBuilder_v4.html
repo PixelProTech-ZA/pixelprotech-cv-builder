@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="description" content="Free CV Builder by Pixel Pro Tech Solutions – Build a professional CV in 60 seconds. South Africa's #1 free CV tool.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>PIXEL CV Builder — PixelProTech Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&family=Barlow:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════
+   ROOT VARIABLES — BRAND EXACT
+════════════════════════════════════════ */
+:root{
+  --K:#0a0a0a;
+  --K2:#111111;
+  --K3:#1a1a1a;
+  --K4:#242424;
+  --G:#7b2fff;
+  --GD:#5a1fd1;
+  --GL:rgba(123,47,255,.14);
+  --GB:rgba(123,47,255,.28);
+  --W:#ffffff;
+  --WO:#f7f7f7;
+  --WB:#eeeeee;
+  --MT:#777;
+  --WA:#00d4aa;
+  --R:14px;
+  --SH:0 4px 28px rgba(0,0,0,.13);
+}
+
+/* ════ RESET ════ */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:'Barlow',sans-serif;background:#08080f;color:var(--K);min-height:100vh;overflow-x:hidden;}
+button,input,textarea,select{font-family:'Barlow',sans-serif;}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:var(--K);}
+::-webkit-scrollbar-thumb{background:#7b2fff;border-radius:10px;}
+
+/* ════ HEADER ════ */
+.hdr{
+  background:var(--K);
+  border-bottom:2px solid #7b2fff;
+  height:60px;padding:0 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:999;
+}
+.logo-wrap{display:flex;align-items:center;gap:11px;text-decoration:none;}
+.logo-sq{
+  width:38px;height:38px;background:var(--G);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:#fff;
+  flex-shrink:0;letter-spacing:0;
+}
+.logo-text{line-height:1.15;}
+.logo-name{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:#fff;letter-spacing:3px;}
+.logo-sub{font-size:9px;color:#00d4aa;letter-spacing:2.5px;font-weight:700;text-transform:uppercase;}
+.hdr-right{display:flex;align-items:center;gap:8px;}
+.btn-hdr-wa{
+  background:#00d4aa;color:#08080f;
+  border:none;padding:8px 13px;border-radius:22px;
+  font-size:11px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;gap:5px;
+  text-decoration:none;white-space:nowrap;transition:transform .12s;
+}
+.btn-hdr-wa:active{transform:scale(.95);}
+.draft-badge{
+  font-size:10px;color:var(--G);
+  border:1px solid var(--GB);border-radius:6px;
+  padding:4px 8px;font-weight:700;cursor:pointer;
+  display:none;
+}
+
+/* ════ HERO ════ */
+.hero{
+  background:var(--K);
+  padding:32px 16px 26px;
+  text-align:center;
+  border-bottom:1px solid #1e1e1e;
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;
+  bottom:-80px;left:50%;transform:translateX(-50%);
+  width:400px;height:200px;
+  background:radial-gradient(ellipse,rgba(0,200,83,.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  display:inline-block;
+  background:rgba(123,47,255,.14);border:1px solid rgba(123,47,255,.28);
+  color:#a87fff;font-size:10px;font-weight:700;
+  letter-spacing:2.5px;text-transform:uppercase;
+  padding:5px 14px;border-radius:20px;margin-bottom:14px;
+}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(38px,11vw,68px);
+  letter-spacing:2px;line-height:.92;color:var(--W);
+}
+.hero h1 em{color:#00d4aa;font-style:normal;}
+.hero p{font-size:13px;color:#888;margin-top:12px;max-width:330px;margin-inline:auto;line-height:1.55;}
+.pills{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:16px;}
+.pill{font-size:10px;font-weight:700;padding:4px 11px;border-radius:20px;background:var(--K3);border:1px solid #2a2a2a;color:#999;}
+.pill.g{border-color:var(--GB);color:var(--G);background:var(--GL);}
+
+/* ════ PROGRESS BAR ════ */
+.progress-bar-wrap{background:var(--K);padding:10px 16px;border-bottom:1px solid #1a1a1a;}
+.progress-steps{display:flex;gap:0;max-width:600px;margin:0 auto;}
+.ps{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:5px 2px;border-radius:8px;}
+.ps:hover{background:var(--K3);}
+.ps-num{width:28px;height:28px;border-radius:50%;background:var(--K3);color:#555;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.ps-lbl{font-size:9px;color:#444;font-weight:700;letter-spacing:.8px;text-transform:uppercase;white-space:nowrap;}
+.ps.on .ps-num{background:var(--G);color:#fff;}
+.ps.on .ps-lbl{color:var(--G);}
+.ps.done .ps-num{background:#1a0d3a;color:#7b2fff;}
+.ps.done .ps-lbl{color:#5a1fd1;}
+.ps-line{flex:1;height:2px;background:var(--K3);margin-top:14px;border-radius:2px;}
+.ps.done + .ps-line{background:var(--G);}
+
+/* ════ LAYOUT ════ */
+.app{max-width:1120px;margin:0 auto;padding:16px;display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:840px){.app{grid-template-columns:1fr 1fr;align-items:start;}}
+
+/* ════ CARD ════ */
+.card{background:#0d0d1a;border-radius:var(--R);overflow:hidden;box-shadow:var(--SH);}
+.card+.card,.card+div{margin-top:14px;}
+.card-hd{
+  background:#0d0d1a;color:#e0e0f0;border-bottom:1px solid #1e1e3a;
+  padding:13px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:13px;font-weight:700;letter-spacing:.4px;
+}
+.card-hd-l{display:flex;align-items:center;gap:8px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--G);flex-shrink:0;}
+.card-bd{padding:18px;}
+
+/* ════ TEMPLATE SCROLL ════ */
+.tpl-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;}
+.tpl-row::-webkit-scrollbar{display:none;}
+.tpl-tile{
+  flex-shrink:0;width:76px;
+  border:2px solid #2a2a4a;background:#12122a;
+  border-radius:12px;padding:10px 5px;text-align:center;
+  cursor:pointer;transition:all .14s;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+}
+.tpl-tile:active{transform:scale(.94);}
+.tpl-tile.on{border-color:#7b2fff;background:rgba(123,47,255,.14);}
+.tpl-tile.on .tl{color:#a87fff;}
+.ti{font-size:24px;line-height:1;}
+.tl{font-size:10px;font-weight:700;color:#888;line-height:1.2;text-align:center;}
+.hot-tag{font-size:8px;font-weight:800;padding:1px 5px;border-radius:5px;background:var(--K);color:var(--G);letter-spacing:.5px;}
+
+/* ════ TOGGLES ════ */
+.tog-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #1e1e3a;}
+.tog-row:last-child{border-bottom:none;padding-bottom:0;}
+.tog-info .tname{font-size:13px;font-weight:700;color:#e0e0f0;}
+.tog-info .tsub{font-size:11px;color:#666;margin-top:1px;}
+.tog{position:relative;width:46px;height:26px;flex-shrink:0;}
+.tog input{opacity:0;width:0;height:0;}
+.ts{position:absolute;inset:0;background:#2a2a4a;border-radius:26px;cursor:pointer;transition:.2s;}
+.ts::before{content:'';position:absolute;width:20px;height:20px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+.tog input:checked+.ts{background:var(--G);}
+.tog input:checked+.ts::before{transform:translateX(20px);}
+
+/* ════ PHOTO ZONE ════ */
+.photo-zone{
+  border:2px dashed #2a2a4a;border-radius:12px;
+  padding:18px;text-align:center;cursor:pointer;
+  transition:all .15s;background:#12122a;position:relative;overflow:hidden;
+}
+.photo-zone:hover,.photo-zone.over{border-color:var(--G);background:var(--GL);}
+.photo-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+#photo-prev{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid var(--G);margin:0 auto 8px;display:none;}
+#photo-prev.on{display:block;}
+.ph-ico{font-size:38px;margin-bottom:6px;}
+.ph-txt{font-size:12px;color:#888;font-weight:500;}
+.ph-txt strong{color:var(--GD);}
+#ph-rm{display:none;background:#ff4444;color:#fff;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;margin-top:6px;position:relative;z-index:2;}
+#ph-rm.on{display:inline-block;}
+
+/* ════ FORM ════ */
+.fg{margin-bottom:14px;}
+.fg.half{grid-column:auto;}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:440px){.fgrid{grid-template-columns:1fr;}}
+label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#888;margin-bottom:5px;}
+label span{color:var(--G);font-size:10px;}
+input[type=text],input[type=tel],input[type=email],textarea,select{
+  width:100%;border:2px solid #2a2a4a;border-radius:10px;
+  padding:11px 14px;font-size:15px;color:#e0e0f0;
+  background:#12122a;color:#e0e0f0;transition:border-color .14s,background .14s;
+  outline:none;resize:vertical;-webkit-appearance:none;
+}
+input:focus,textarea:focus,select:focus{border-color:#7b2fff;background:#1a0d3a;}
+textarea{min-height:86px;line-height:1.6;}
+.hint{font-size:11px;color:#666;margin-top:4px;line-height:1.45;}
+
+/* ════ SMART SUGGEST ════ */
+.sug-box{display:none;border:2px solid var(--GB);border-radius:10px;margin-top:5px;overflow:hidden;background:var(--W);box-shadow:0 6px 20px rgba(0,200,83,.1);}
+.sug-box.on{display:block;}
+.sug-hd{background:var(--GL);padding:6px 12px;font-size:10px;font-weight:700;color:var(--GD);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--GB);}
+.sug-item{padding:9px 12px;font-size:13px;cursor:pointer;border-bottom:1px solid var(--WO);transition:background .1s;display:flex;align-items:center;gap:8px;}
+.sug-item:last-child{border-bottom:none;}
+.sug-item:hover,.sug-item:active{background:var(--GL);}
+.si-ico{font-size:18px;}
+
+/* ════ BUTTONS ════ */
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;}
+.btn{
+  flex:1;min-width:120px;padding:14px 12px;
+  border-radius:12px;border:none;
+  font-size:14px;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  transition:transform .1s,background .15s;letter-spacing:.3px;
+}
+.btn:active{transform:scale(.96);}
+.btn-g{background:var(--G);color:#fff;}
+.btn-g:hover{background:var(--GD);}
+.btn-k{background:var(--K);color:var(--W);border:2px solid #2a2a2a;}
+.btn-k:hover{background:var(--K3);}
+.btn-w{background:#6c47ff;color:var(--W);}
+.btn-w:hover{background:#5535e0;}
+.btn-d{background:#1565C0;color:var(--W);}
+.btn-d:hover{background:#0d47a1;}
+.btn-wa-big{
+  background:#00d4aa;color:#08080f;
+  width:100%;margin-top:10px;padding:15px;
+  border-radius:12px;border:none;
+  font-size:14px;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:transform .1s;
+}
+.btn-wa-big:active{transform:scale(.97);}
+.save-btn{
+  background:transparent;border:1px solid var(--GB);color:var(--G);
+  border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.save-btn:hover{background:var(--GL);}
+
+/* ════ LIVE PREVIEW ════ */
+.pv-wrap{position:sticky;top:76px;}
+.pv-hd{
+  background:var(--K);border-radius:14px 14px 0 0;
+  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
+}
+.pv-hd-l{display:flex;align-items:center;gap:8px;color:var(--W);font-size:13px;font-weight:700;}
+.live-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--G);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,200,83,.4);}50%{opacity:.6;box-shadow:0 0 0 6px rgba(0,200,83,0);}}
+.pv-btns{display:flex;gap:6px;}
+.pv-btn{background:var(--K3);color:#aaa;border:1px solid #333;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;transition:all .14s;white-space:nowrap;}
+.pv-btn:hover{background:var(--G);color:#fff;border-color:var(--G);}
+.pv-box{background:#e8e8e8;border-radius:0 0 14px 14px;min-height:380px;overflow:hidden;}
+.empty-pv{padding:60px 20px;text-align:center;color:#bbb;}
+.empty-pv .ei{font-size:52px;margin-bottom:14px;}
+.empty-pv p{font-size:13px;line-height:1.65;}
+.empty-pv strong{color:#888;}
+
+/* ════ JOB MATCH ════ */
+.jm-card{background:var(--W);border-radius:14px;overflow:hidden;box-shadow:var(--SH);display:none;}
+.jm-card.on{display:block;}
+.jm-hd{background:var(--K);color:var(--W);padding:12px 18px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.jm-grid{padding:14px;display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+@media(min-width:500px){.jm-grid{grid-template-columns:repeat(3,1fr);}}
+.jm-tile{background:var(--WO);border:1px solid var(--WB);border-radius:10px;padding:11px 8px;text-align:center;cursor:pointer;transition:all .14s;}
+.jm-tile:hover{border-color:var(--G);background:var(--GL);}
+.jm-ico{font-size:22px;margin-bottom:4px;}
+.jm-name{font-size:11px;font-weight:700;color:#333;}
+.jm-tag{font-size:9px;color:#999;margin-top:2px;}
+
+/* ════ UPSELL ════ */
+.upsell{
+  background:linear-gradient(140deg,var(--K) 0%,#071e10 100%);
+  border:1px solid var(--GB);border-radius:14px;
+  padding:22px 18px;position:relative;overflow:hidden;
+}
+.upsell::before{content:'';position:absolute;top:-40px;right:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(0,200,83,.12),transparent 70%);}
+.up-tag{display:inline-block;background:var(--G);color:#fff;font-size:10px;font-weight:800;padding:3px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+.upsell h3{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--W);letter-spacing:1px;line-height:1.05;}
+.upsell p{font-size:12px;color:#777;margin-top:7px;line-height:1.55;}
+.price-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.pc{background:var(--K3);border:1px solid #2a2a2a;border-radius:10px;padding:11px 14px;flex:1;min-width:110px;}
+.pc-n{font-size:10px;color:#666;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+.pc-p{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--G);letter-spacing:1px;margin-top:2px;}
+.pc-d{font-size:10px;color:#444;margin-top:1px;}
+
+/* ════ TRUST BAR ════ */
+.trust{background:var(--K);padding:14px 16px;display:flex;justify-content:center;gap:20px;flex-wrap:wrap;border-top:1px solid #1a1a1a;}
+.ti2{display:flex;align-items:center;gap:6px;font-size:11px;color:#444;font-weight:600;}
+.ti2 span{color:var(--G);}
+
+/* ════ FOOTER ════ */
+footer{background:var(--K);color:#2e2e2e;text-align:center;padding:24px 16px 32px;font-size:12px;border-top:1px solid #161616;}
+footer strong{color:var(--G);}
+.f-contact{display:flex;justify-content:center;gap:20px;margin-top:8px;flex-wrap:wrap;}
+.f-contact a{color:#555;text-decoration:none;font-size:11px;transition:color .15s;}
+.f-contact a:hover{color:var(--G);}
+
+/* ════ TOAST ════ */
+.toast{
+  position:fixed;bottom:22px;left:50%;
+  transform:translateX(-50%) translateY(100px);
+  background:var(--K);color:var(--W);
+  padding:12px 20px;border-radius:12px;
+  font-size:13px;font-weight:600;
+  border:1px solid var(--GB);
+  box-shadow:0 6px 28px rgba(0,0,0,.45);
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1);
+  z-index:99999;white-space:nowrap;pointer-events:none;
+}
+.toast.on{transform:translateX(-50%) translateY(0);}
+
+/* ════ DIVIDER ════ */
+.sect-divider{height:1px;background:var(--WO);margin:4px 0 14px;}
+
+/* ════════════════════════════════════════
+   CV TEMPLATE RENDERING STYLES
+════════════════════════════════════════ */
+
+/* LAYOUT A — Sidebar */
+.cva{display:flex;min-height:100%;font-family:'Barlow',sans-serif;}
+.cva .sb{width:165px;flex-shrink:0;padding:22px 14px;display:flex;flex-direction:column;gap:14px;}
+.cva .mn{flex:1;padding:22px 20px;}
+.cva .av{width:88px;height:88px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:34px;margin:0 auto 8px;border:3px solid rgba(255,255,255,.3);}
+.cva .av img{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.4);}
+.cva .cvname{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:#fff;text-align:center;line-height:1.1;}
+.cva .cvrole{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-align:center;margin-top:2px;opacity:.75;}
+.cva .sb-sec{margin-top:0;}
+.cva .sb-t{font-size:8px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.5;margin-bottom:5px;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,.15);}
+.cva .sb-i{font-size:10px;color:rgba(255,255,255,.85);margin-bottom:3px;word-break:break-all;line-height:1.4;}
+.cva .sp{display:inline-block;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px;margin:2px 1px;background:rgba(255,255,255,.18);color:#fff;}
+.cva .mn-name{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:1.5px;line-height:1;}
+.cva .mn-role{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+.cva .div{height:2px;border-radius:2px;margin:12px 0;}
+.cva .st{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;}
+.cva .sx{font-size:11px;color:#444;margin-bottom:3px;line-height:1.5;}
+.cva .cv-foot{padding:6px 20px;text-align:right;font-size:8px;color:#ccc;border-top:1px solid #eee;margin-top:10px;}
+
+/* LAYOUT B — Banner */
+.cvb{font-family:'Barlow',sans-serif;}
+.cvb .top{padding:20px 24px;display:flex;align-items:center;gap:16px;}
+.cvb .av2{width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:28px;flex-shrink:0;border:3px solid rgba(255,255,255,.35);}
+.cvb .av2 img{width:78px;height:78px;border-radius:50%;object-fit:cover;}
+.cvb .top-t{flex:1;min-width:0;}
+.cvb .bn{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1.5px;color:#fff;line-height:1;}
+.cvb .br{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:3px;}
+.cvb .bl{font-size:10px;color:rgba(255,255,255,.55);margin-top:2px;}
+.cvb .cstrip{padding:7px 24px;display:flex;flex-wrap:wrap;gap:12px;font-size:10px;font-weight:600;}
+.cvb .ci{display:flex;align-items:center;gap:4px;}
+.cvb .body{padding:16px 24px;}
+.cvb .bsec{margin-bottom:14px;}
+.cvb .bst{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding-bottom:4px;margin-bottom:7px;}
+.cvb .bt{font-size:11px;color:#444;margin-bottom:3px;line-height:1.5;}
+.cvb .bsk{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:8px;margin:2px 2px;}
+.cvb .cv-foot{padding:7px 24px;text-align:right;font-size:8px;color:#ccc;border-top:1px solid #eee;}
+
+/* ════ PRINT ════ */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  body{background:#fff!important;}
+  .hdr,.hero,.progress-bar-wrap,.app>div:first-child,
+  .trust,footer,.toast,.jm-card,.upsell{display:none!important;}
+  .app{display:block!important;padding:0!important;max-width:100%!important;}
+  .pv-wrap{position:static!important;}
+  .pv-hd,.pv-btns{display:none!important;}
+  .pv-box{border-radius:0!important;min-height:0!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast">Done!</div>
+
+<!-- ══ HEADER ══ -->
+<header class="hdr">
+  <a class="logo-wrap" href="#">
+    <div class="logo-sq">PP</div>
+    <div class="logo-text">
+      <div class="logo-name">Pixel Pro Tech</div>
+      <div class="logo-sub">Solutions 🇿🇦</div>
+    </div>
+  </a>
+  <div class="hdr-right">
+    <span class="draft-badge" id="draft-badge" onclick="loadDraft()">📂 Draft Saved</span>
+    <a class="btn-hdr-wa" href="https://wa.me/27766459348?text=Hi%20Pixel%20Pro%20Tech%20Solutions%2C%20I%20need%20help%20with%20my%20CV%20please!" target="_blank">
+      💬 076 645 9348
+    </a>
+  </div>
+</header>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-eyebrow">🇿🇦 South Africa's Free CV Tool</div>
+  <h1>BUILD YOUR <em>CV</em><br>IN 60 SECONDS</h1>
+  <p>No signup. No stress. Professional CVs for every job seeker in South Africa — free forever.</p>
+  <div class="pills">
+    <span class="pill g">✓ 100% Free</span>
+    <span class="pill g">✓ No Login</span>
+    <span class="pill g">✓ PDF Export</span>
+    <span class="pill g">✓ Word Export</span>
+    <span class="pill g">✓ Photo Upload</span>
+    <span class="pill">10 Templates</span>
+    <span class="pill">Saves Drafts</span>
+  </div>
+</div>
+
+<!-- ══ STEPS ══ -->
+<div class="progress-bar-wrap">
+  <div class="progress-steps">
+    <div class="ps on" id="ps1"><div class="ps-num">1</div><div class="ps-lbl">Template</div></div>
+    <div class="ps-line"></div>
+    <div class="ps" id="ps2"><div class="ps-num">2</div><div class="ps-lbl">Details</div></div>
+    <div class="ps-line"></div>
+    <div class="ps" id="ps3"><div class="ps-num">3</div><div class="ps-lbl">Experience</div></div>
+    <div class="ps-line"></div>
+    <div class="ps" id="ps4"><div class="ps-num">4</div><div class="ps-lbl">Download</div></div>
+  </div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
+<div class="app">
+
+<!-- ══════ LEFT COLUMN ══════ -->
+<div id="left-col">
+
+  <!-- STEP 1: TEMPLATE -->
+  <div class="card" id="sec-tpl">
+    <div class="card-hd">
+      <div class="card-hd-l"><div class="dot"></div>Step 1 · Choose Template</div>
+      <span style="font-size:10px;color:#555">Swipe →</span>
+    </div>
+    <div class="card-bd">
+      <div class="tpl-row" id="tpl-row">
+        <div class="tpl-tile on" data-t="general" onclick="pickTpl(this)"><div class="ti">📄</div><div class="tl">General Worker</div><div class="hot-tag">🔥 POPULAR</div></div>
+        <div class="tpl-tile" data-t="security" onclick="pickTpl(this)"><div class="ti">🛡️</div><div class="tl">Security Guard</div></div>
+        <div class="tpl-tile" data-t="retail" onclick="pickTpl(this)"><div class="ti">🛒</div><div class="tl">Retail/Shop</div></div>
+        <div class="tpl-tile" data-t="driver" onclick="pickTpl(this)"><div class="ti">🚗</div><div class="tl">Driver</div></div>
+        <div class="tpl-tile" data-t="cleaner" onclick="pickTpl(this)"><div class="ti">🧹</div><div class="tl">Cleaner</div></div>
+        <div class="tpl-tile" data-t="warehouse" onclick="pickTpl(this)"><div class="ti">📦</div><div class="tl">Warehouse</div></div>
+        <div class="tpl-tile" data-t="construction" onclick="pickTpl(this)"><div class="ti">🏗️</div><div class="tl">Construction</div></div>
+        <div class="tpl-tile" data-t="domestic" onclick="pickTpl(this)"><div class="ti">🏠</div><div class="tl">Domestic</div></div>
+        <div class="tpl-tile" data-t="admin" onclick="pickTpl(this)"><div class="ti">💼</div><div class="tl">Office/Admin</div></div>
+        <div class="tpl-tile" data-t="hospitality" onclick="pickTpl(this)"><div class="ti">🍽️</div><div class="tl">Hospitality</div></div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <div class="tog-row">
+          <div class="tog-info">
+            <div class="tname">📸 Include Photo on CV</div>
+            <div class="tsub">Sidebar layout with your picture</div>
+          </div>
+          <label class="tog"><input type="checkbox" id="tog-photo" onchange="togglePhoto();render();"><span class="ts"></span></label>
+        </div>
+        <div class="tog-row">
+          <div class="tog-info">
+            <div class="tname">🎨 Coloured CV Header</div>
+            <div class="tsub">Template colour on header bar</div>
+          </div>
+          <label class="tog"><input type="checkbox" id="tog-color" checked onchange="render();"><span class="ts"></span></label>
+        </div>
+        <div class="tog-row">
+          <div class="tog-info">
+            <div class="tname">💾 Auto-Save Draft</div>
+            <div class="tsub">Browser saves your progress</div>
+          </div>
+          <label class="tog"><input type="checkbox" id="tog-save" checked><span class="ts"></span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHOTO UPLOAD (hidden by default) -->
+  <div class="card" id="photo-card" style="display:none;">
+    <div class="card-hd"><div class="card-hd-l"><div class="dot"></div>Upload Your Photo</div></div>
+    <div class="card-bd">
+      <div class="photo-zone" id="pz">
+        <input type="file" id="ph-in" accept="image/*" onchange="loadPhoto(event)">
+        <img id="photo-prev" src="" alt="Preview">
+        <div class="ph-ico" id="ph-ico">📷</div>
+        <div class="ph-txt"><strong>Tap to upload photo</strong><br>JPG · PNG · Max 5MB</div>
+        <button id="ph-rm" onclick="rmPhoto(event)">✕ Remove Photo</button>
+      </div>
+      <p class="hint" style="margin-top:8px;">💡 Use a clear photo, plain background, neat clothes. Employers prefer professional photos.</p>
+    </div>
+  </div>
+
+  <!-- STEP 2: PERSONAL DETAILS -->
+  <div class="card" id="sec-det">
+    <div class="card-hd">
+      <div class="card-hd-l"><div class="dot"></div>Step 2 · Personal Details</div>
+      <button class="save-btn" onclick="saveDraft()">💾 Save Draft</button>
+    </div>
+    <div class="card-bd">
+      <div class="fgrid">
+        <div class="fg">
+          <label>Full Name <span>*</span></label>
+          <input id="fn" type="text" placeholder="e.g. Thabo Nkosi" oninput="render();autosave();">
+        </div>
+        <div class="fg">
+          <label>Phone Number <span>*</span></label>
+          <input id="fp" type="tel" placeholder="076 645 9348" oninput="render();autosave();">
+        </div>
+        <div class="fg">
+          <label>Email Address</label>
+          <input id="fe" type="email" placeholder="thabo@gmail.com" oninput="render();autosave();">
+        </div>
+        <div class="fg">
+          <label>City / Area <span>*</span></label>
+          <input id="fl" type="text" placeholder="Soweto, Johannesburg" oninput="render();autosave();">
+        </div>
+      </div>
+      <div class="fg">
+        <label>Job Applying For <span>*</span></label>
+        <input id="fj" type="text" placeholder="e.g. Security Guard, Cashier, General Worker"
+          oninput="render();autosave();smartSuggest(this.value);">
+        <div class="sug-box" id="sug-box">
+          <div class="sug-hd">⚡ Smart Suggestions — tap to use</div>
+          <div id="sug-list"></div>
+        </div>
+      </div>
+      <div class="fgrid">
+        <div class="fg">
+          <label>Nationality</label>
+          <input id="fnat" type="text" placeholder="South African" value="South African" oninput="render();autosave();">
+        </div>
+        <div class="fg">
+          <label>ID / Passport (optional)</label>
+          <input id="fid" type="text" placeholder="****1234****" oninput="render();autosave();">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: EXPERIENCE & SKILLS -->
+  <div class="card" id="sec-exp">
+    <div class="card-hd"><div class="card-hd-l"><div class="dot"></div>Step 3 · Experience & Skills</div></div>
+    <div class="card-bd">
+      <div class="fg">
+        <label>Work Experience</label>
+        <textarea id="fex" placeholder="List your previous jobs. Example:&#10;&#10;Security Guard – ABC Mall, Johannesburg (2021–2023)&#10;• Monitored CCTV and controlled access points&#10;• Conducted daily patrols and wrote incident reports&#10;• Reported to Head of Security" oninput="render();autosave();"></textarea>
+        <p class="hint">💡 Start with most recent job. Include company, job title and years.</p>
+      </div>
+      <div class="fg">
+        <label>Skills & Qualifications</label>
+        <textarea id="fsk" placeholder="List skills one per line. Example:&#10;&#10;PSIRA Grade C Registered&#10;Valid Code 10 Driver's Licence&#10;First Aid Certificate Level 1&#10;CCTV Monitoring&#10;Teamwork & Communication&#10;Reliable and Punctual" oninput="render();autosave();"></textarea>
+        <p class="hint">💡 Include licences, certificates, and personal strengths.</p>
+      </div>
+      <div class="fg">
+        <label>Education & Training</label>
+        <textarea id="fed" placeholder="e.g. Matric – Dobsonville High School (2019)&#10;PSIRA Certificate (2020)&#10;Code 10 Drivers Licence (2021)" oninput="render();autosave();"></textarea>
+      </div>
+      <div class="fg">
+        <label>References</label>
+        <textarea id="fref" placeholder="John Dlamini – Supervisor – 082 111 2222&#10;&#10;OR write:&#10;References available upon request" oninput="render();autosave();"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: DOWNLOAD -->
+  <div class="card" id="sec-dl">
+    <div class="card-hd"><div class="card-hd-l"><div class="dot"></div>Step 4 · Download Your CV</div></div>
+    <div class="card-bd">
+      <div class="btn-row">
+        <button class="btn btn-g" onclick="dlPDF()">🖨️ Save as PDF</button>
+        <button class="btn btn-d" onclick="dlWord()">📝 Save as Word</button>
+      </div>
+      <div class="btn-row" style="margin-top:10px;">
+        
+        <button class="btn btn-w" onclick="copyText()">📋 Copy Text</button>
+      </div>
+      <button class="btn-wa-big" onclick="waHelp()">
+        💬 Need a professional CV upgrade? Chat with Pixel Pro Tech Solutions
+      </button>
+      <p style="font-size:11px;color:#bbb;text-align:center;margin-top:8px;">
+        📞 076 645 9348 · pixelprotechsolutions@gmail.com · Pro CV from R50
+      </p>
+    </div>
+  </div>
+
+</div>
+<!-- ══════ END LEFT ══════ -->
+
+<!-- ══════ RIGHT COLUMN ══════ -->
+<div id="right-col">
+
+  <!-- LIVE PREVIEW -->
+  <div class="pv-wrap">
+    <div class="pv-hd">
+      <div class="pv-hd-l"><div class="live-dot"></div>Live CV Preview</div>
+      <div class="pv-btns">
+        <button class="pv-btn" onclick="dlPDF()">🖨️ PDF</button>
+        <button class="pv-btn" onclick="dlWord()">📝 Word</button>
+        
+      </div>
+    </div>
+    <div class="pv-box" id="pv-box">
+      <div class="empty-pv">
+        <div class="ei">📋</div>
+        <p>Your CV appears here<br>as you type.<br><br><strong>Choose a template to begin!</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOB MATCHING -->
+  <div class="jm-card" id="jm-card">
+    <div class="jm-hd"><div class="dot"></div>🎯 Jobs You Can Apply For</div>
+    <div class="jm-grid" id="jm-grid"></div>
+  </div>
+
+  <!-- UPSELL -->
+  <div class="upsell">
+    <div class="up-tag">💰 PRO UPGRADE SERVICE</div>
+    <h3>Want a CV That Actually Gets You the Interview?</h3>
+    <p>Pixel Pro Tech Solutions will professionally format, rewrite and personalise your CV — making it stand out from every other applicant.</p>
+    <div class="price-row">
+      <div class="pc"><div class="pc-n">Basic</div><div class="pc-p">R50</div><div class="pc-d">Format & clean up</div></div>
+      <div class="pc"><div class="pc-n">Pro CV</div><div class="pc-p">R100</div><div class="pc-d">Full rewrite + design</div></div>
+      <div class="pc"><div class="pc-n">Premium</div><div class="pc-p">R150</div><div class="pc-d">CV + Cover Letter</div></div>
+    </div>
+    <button class="btn-wa-big" style="margin-top:16px;" onclick="waPro()">
+      💬 WhatsApp Us Now — 076 645 9348
+    </button>
+  </div>
+
+</div>
+<!-- ══════ END RIGHT ══════ -->
+
+</div><!-- end .app -->
+
+<!-- TRUST BAR -->
+<div class="trust">
+  <div class="ti2"><span>🔒</span>No data stored</div>
+  <div class="ti2"><span>⚡</span>Instant results</div>
+  <div class="ti2"><span>📱</span>Any phone</div>
+  <div class="ti2"><span>🇿🇦</span>Built for SA</div>
+  <div class="ti2"><span>✓</span>100% Free</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Pixel Pro Tech Solutions</strong> — Helping job seekers & businesses across South Africa 🇿🇦<br>
+  <div class="f-contact">
+    <a href="mailto:pixelprotechsolutions@gmail.com">✉️ pixelprotechsolutions@gmail.com</a>
+    <a href="https://wa.me/27766459348" target="_blank">💬 076 645 9348</a>
+    <a href="#">🌐 pixelprotechsolutions.co.za</a>
+  </div>
+  <p style="margin-top:10px;font-size:10px;color:#222;">CV Builder v3.0 · No login · Works offline · Built with HTML, CSS & JavaScript</p>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════
+     JAVASCRIPT ENGINE
+════════════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ─── BRAND DATA ─────────────────────────────────── */
+const BRAND = {
+  name:'Pixel Pro Tech Solutions',
+  phone:'076 645 9348',
+  email:'pixelprotechsolutions@gmail.com',
+  site:'pixelprotechsolutions.co.za',
+  wa:'27766459348'
+};
+
+/* ─── TEMPLATE CONFIG ────────────────────────────── */
+const TPL = {
+  general:      {c:'#0a0a0a',a:'#00c853',lbl:'General Worker',        lay:'b'},
+  security:     {c:'#1a237e',a:'#00c853',lbl:'Security Officer',       lay:'a'},
+  retail:       {c:'#b71c1c',a:'#ff8f00',lbl:'Retail Professional',    lay:'b'},
+  driver:       {c:'#1b5e20',a:'#00c853',lbl:'Professional Driver',    lay:'a'},
+  cleaner:      {c:'#00695c',a:'#26c6da',lbl:'Cleaning Professional',  lay:'b'},
+  warehouse:    {c:'#e65100',a:'#ffd54f',lbl:'Warehouse Worker',       lay:'b'},
+  construction: {c:'#3e2723',a:'#ff8f00',lbl:'Construction Worker',    lay:'b'},
+  domestic:     {c:'#4a148c',a:'#ce93d8',lbl:'Domestic Worker',        lay:'a'},
+  admin:        {c:'#263238',a:'#00c853',lbl:'Admin / Office',         lay:'b'},
+  hospitality:  {c:'#880e4f',a:'#f48fb1',lbl:'Hospitality Pro',        lay:'a'},
+};
+
+/* ─── AUTO-FILL DATA ─────────────────────────────── */
+const AF = {
+  general:{
+    job:'General Worker / Labourer',
+    skills:'Hard Working & Reliable\nAble to Follow Instructions Accurately\nPhysically Fit & Energetic\nTeamwork & Cooperation\nGood Time Keeping & Punctuality\nWilling to Learn New Skills\nHonest & Trustworthy',
+    exp:'General Worker – Various Employers, Johannesburg (2019–2024)\n• Performed daily operational duties as required by supervisors\n• Maintained clean, safe and organised work environments\n• Loaded and offloaded goods and materials as needed\n• Worked as part of a team to meet daily output targets\n• Received commendation for reliability and punctuality',
+    edu:'Matric Certificate – Dobsonville High School (2018)'
+  },
+  security:{
+    job:'Security Guard / Security Officer',
+    skills:'PSIRA Grade C Registered\nAccess Control & Visitor Management\nCCTV Camera Monitoring\nIncident Report Writing\nRegular Patrolling & Surveillance\nFirst Aid Certificate Level 1\nFirearm Competency (if applicable)\nTeamwork & Clear Communication\nHonesty & High Integrity',
+    exp:'Security Officer – ABC Shopping Mall, Johannesburg (2021–2024)\n• Monitored CCTV cameras and controlled all access points\n• Conducted scheduled patrols of the premises\n• Wrote accurate daily occurrence and incident reports\n• Maintained calm and professional conduct during emergencies\n• Reported directly to the Head of Security',
+    edu:'PSIRA Grade C Certificate (2020)\nFirst Aid Level 1 – Red Cross (2021)\nMatric – Soweto High School (2019)'
+  },
+  retail:{
+    job:'Cashier / Shop Assistant / Retail Assistant',
+    skills:'Cash Handling & POS System Operation\nCustomer Service Excellence\nStock Taking & Inventory Management\nMerchandising & Shelf Packing\nProduct Knowledge & Upselling\nTeamwork & Collaboration\nMicrosoft Excel (Basic)\nHonesty & Attention to Detail',
+    exp:'Cashier – Pick n Pay Superstore, Soweto (2020–2024)\n• Processed customer transactions quickly and accurately\n• Handled cash, card and voucher payments daily\n• Assisted customers with product queries and complaints\n• Maintained a clean and organised checkout area\n• Participated in monthly stock takes with zero variances',
+    edu:'Matric Certificate (2019)\nRetail Customer Service Certificate – SETA (2020)'
+  },
+  driver:{
+    job:'Driver / Delivery Driver / Professional Driver',
+    skills:"Valid Code 10 Driver's Licence\nProfessional Driving Permit (PDP)\nVehicle Pre-trip Inspection & Maintenance\nRoute Planning & GPS Navigation\nDelivery & Logistics Experience\nDefensive Driving Skills\nTime Management & Punctuality\nClean Driving Record — No Accidents",
+    exp:'Delivery Driver – FastMove Couriers, Johannesburg (2020–2024)\n• Delivered parcels to clients across Johannesburg and surrounding areas\n• Maintained vehicle cleanliness and conducted pre-trip checks daily\n• Completed delivery manifests and obtained client signatures\n• Built strong professional relationships with regular clients\n• Consistently met and exceeded daily delivery targets',
+    edu:"Code 10 Driver's Licence (2019)\nProfessional Driving Permit – PDP (2020)\nDefensive Driving Course (2021)"
+  },
+  cleaner:{
+    job:'Cleaner / Housekeeper / Cleaning Staff',
+    skills:'All Cleaning Chemicals & Equipment\nFloor Polishing & Strip Waxing Machines\nWaste Management & Recycling\nBathroom & Kitchen Deep Sanitisation\nCarpet Vacuuming & Shampooing\nAttention to Detail & High Standards\nPunctuality & Reliability\nHealth & Safety Compliance',
+    exp:'Office Cleaner – ABC Office Park, Sandton (2019–2024)\n• Cleaned offices, boardrooms, kitchens and bathrooms to high standards\n• Operated industrial floor polishers and cleaning equipment safely\n• Managed waste removal and recycling separation correctly\n• Maintained a complete inventory of cleaning supplies\n• Received Employee of the Month recognition twice',
+    edu:'Matric Certificate (2018)\nOHS Cleaning & Safety Training (2019)'
+  },
+  warehouse:{
+    job:'Warehouse Assistant / Picker Packer / Stock Controller',
+    skills:'Stock Receiving & Dispatching\nPicking & Packing Orders Accurately\nForklift Operation (Certified)\nInventory Management Systems\nRF Barcode Scanner Operation\nPhysical Fitness & Stamina\nTeamwork in Fast-paced Environments\nBasic Computer & Email Skills',
+    exp:'Warehouse Assistant – FastFreight Logistics, Midrand (2021–2024)\n• Received and dispatched stock according to daily manifests\n• Picked and packed orders accurately for dispatch\n• Operated RF barcode scanners for live inventory tracking\n• Participated in weekly and monthly stock counts\n• Maintained a clean and well-organised warehouse floor',
+    edu:'Matric Certificate (2020)\nForklift Operator Certificate (2021)'
+  },
+  construction:{
+    job:'General Worker / Construction Worker / Site Labourer',
+    skills:'General Construction & Labouring\nBricklaying & Plastering Assistance\nScaffolding & Formwork Setup\nConcrete Mixing & Pouring\nSite Safety & PPE Compliance\nHeavy Material Handling\nPhysically Fit & Strong Work Ethic\nTeamwork & Following Supervisor Instructions',
+    exp:'Construction Labourer – BuildRight Projects, Pretoria (2020–2024)\n• Assisted bricklayers, plasterers and carpenters on active sites\n• Loaded, offloaded and transported building materials across site\n• Mixed concrete and mortar to required specifications\n• Maintained a clean and hazard-free work environment at all times\n• Strictly followed all site safety protocols and wore required PPE',
+    edu:'Matric Certificate (2019)\nOHS Construction Safety Certificate (2020)'
+  },
+  domestic:{
+    job:'Domestic Worker / Housekeeper / Au Pair',
+    skills:'General Housekeeping & Deep Cleaning\nCooking & Nutritious Meal Preparation\nChild Care & Supervision (Ages 0–12)\nIroning, Laundry & Linen Care\nBasic Garden Maintenance\nHonesty & High Trustworthiness\nTime Management & Responsibility\nRespectful & Professional Conduct',
+    exp:'Domestic Worker – Private Household, Sandton (2018–2024)\n• Maintained a fully clean and organised household on a daily basis\n• Cooked balanced, nutritious meals for a family of 4\n• Provided attentive care for children aged 3 and 7\n• Managed weekly laundry, ironing and linen rotation\n• Handled grocery lists and monitored household supplies',
+    edu:'Matric Certificate (2017)\nChildcare & Home Management Certificate (2018)'
+  },
+  admin:{
+    job:'Administrative Assistant / Office Clerk / Receptionist',
+    skills:'Microsoft Office Suite (Word, Excel, Outlook, PowerPoint)\nData Entry & Record Keeping\nFiling & Document Management\nProfessional Telephone & Email Etiquette\nAppointment Scheduling & Diary Management\nPetty Cash & Basic Bookkeeping\nTeam Collaboration\nAttention to Detail & Accuracy',
+    exp:'Administrative Assistant – XYZ Company, Johannesburg (2020–2024)\n• Managed all incoming and outgoing business correspondence\n• Maintained and updated employee and client files accurately\n• Scheduled meetings and managed the Director\'s daily diary\n• Answered and professionally directed all incoming calls\n• Prepared monthly expense reports and managed petty cash',
+    edu:'Matric Certificate (2019)\nMS Office Certificate – Damelin (2020)\nBusiness Administration N4 – TVET College (2021)'
+  },
+  hospitality:{
+    job:'Waiter / Waitress / Kitchen Staff / Restaurant Assistant',
+    skills:'Food & Beverage Service\nTable Setting & Fine Dining Presentation\nCash Handling & POS Restaurant System\nCustomer Service & Guest Satisfaction\nHACCP Food Hygiene & Safety Standards\nTeamwork in High-Pressure Kitchen Environments\nFull Menu Knowledge & Allergen Awareness\nPunctual, Presentable & Professional',
+    exp:'Waiter – The Grill Room Restaurant, Rosebank (2021–2024)\n• Served food and beverages to guests in a fine dining environment\n• Maintained strict hygiene, uniform and presentation standards\n• Processed orders and payments on POS system accurately\n• Coordinated closely with kitchen and bar staff for efficient service\n• Consistently received 5-star guest feedback and commendations',
+    edu:'Matric Certificate (2020)\nHospitality & Food Service Certificate – HTA (2021)'
+  }
+};
+
+/* ─── JOB SUGGESTIONS ────────────────────────────── */
+const SUGG = {
+  security:[{i:'🛡️',t:'Security Guard',d:'PSIRA required'},{i:'📹',t:'CCTV Operator',d:'Camera monitoring'},{i:'🔐',t:'Access Control Officer',d:'Gate & entry'},{i:'🚔',t:'Armed Response',d:'Firearm required'}],
+  retail:[{i:'🛒',t:'Cashier',d:'POS experience'},{i:'📦',t:'Stock Packer',d:'Shelf filling'},{i:'🏪',t:'Shop Assistant',d:'Customer service'},{i:'💰',t:'Till Supervisor',d:'Cash handling'}],
+  driver:[{i:'🚗',t:'Delivery Driver',d:'Code 8/10'},{i:'🚚',t:'Truck Driver',d:'Code 14 + PDP'},{i:'📦',t:'Courier Driver',d:'Own vehicle'},{i:'🚌',t:'Minibus Driver',d:'PDP required'}],
+  cleaner:[{i:'🧹',t:'Office Cleaner',d:'Commercial cleaning'},{i:'🏨',t:'Hotel Housekeeper',d:'Hospitality'},{i:'🏥',t:'Hospital Cleaner',d:'Medical facility'},{i:'🏠',t:'Domestic Cleaner',d:'Private homes'}],
+  general:[{i:'🏗️',t:'Construction Labourer',d:'Physical work'},{i:'🌿',t:'Garden Worker',d:'Landscaping'},{i:'📦',t:'Packer / Sorter',d:'Factory work'},{i:'🔧',t:'Maintenance Helper',d:'Handyman skills'}],
+  warehouse:[{i:'📦',t:'Picker Packer',d:'Order fulfilment'},{i:'🏭',t:'Forklift Operator',d:'Certified'},{i:'📋',t:'Stock Controller',d:'Inventory'},{i:'🚛',t:'Receiving Clerk',d:'Logistics'}],
+  admin:[{i:'💼',t:'Receptionist',d:'Front desk'},{i:'📋',t:'Office Clerk',d:'Data entry'},{i:'📞',t:'Call Centre Agent',d:'Inbound/outbound'},{i:'📊',t:'Data Capturer',d:'Excel skills'}],
+};
+
+/* ─── JOB MATCHING ───────────────────────────────── */
+const JMATCH = {
+  security:[{i:'🛡️',n:'Security Guard',t:'Hiring Now'},{i:'📹',n:'CCTV Operator',t:'PSIRA req.'},{i:'🔐',n:'Access Control',t:'Entry Level'},{i:'🚔',n:'Armed Response',t:'Firearm req.'},{i:'🏢',n:'Building Security',t:'24hr shifts'},{i:'🎪',n:'Events Security',t:'Weekends'}],
+  retail:[{i:'🛒',n:'Cashier',t:'Hiring Now'},{i:'📦',n:'Stock Controller',t:'Entry Level'},{i:'🏪',n:'Shop Assistant',t:'SA Citizens'},{i:'💰',n:'Till Supervisor',t:'Experience req.'},{i:'🏬',n:'Mall Promoter',t:'Part-time'},{i:'📋',n:'Inventory Clerk',t:'Admin skills'}],
+  driver:[{i:'🚗',n:'Uber/Bolt Driver',t:'Own vehicle'},{i:'🚚',n:'Long Haul Driver',t:'Code 14'},{i:'📦',n:'Courier Driver',t:'Code 8+'},{i:'🚌',n:'Minibus Taxi',t:'PDP req.'},{i:'🛵',n:'Motorbike Courier',t:'Bike needed'},{i:'🏭',n:'Factory Driver',t:'Code 10'}],
+  cleaner:[{i:'🧹',n:'Office Cleaner',t:'Hiring Now'},{i:'🏨',n:'Hotel Housekeeper',t:'Hospitality'},{i:'🏥',n:'Hospital Cleaner',t:'Health sector'},{i:'🏠',n:'Domestic Worker',t:'Private homes'},{i:'🏗️',n:'Site Cleaner',t:'Construction'},{i:'✈️',n:'Airport Cleaner',t:'ID required'}],
+  general:[{i:'🏗️',n:'Construction Worker',t:'Physical'},{i:'🌿',n:'Garden Labourer',t:'Entry Level'},{i:'📦',n:'Packer/Sorter',t:'Factory'},{i:'🧹',n:'Cleaner',t:'Hiring Now'},{i:'🔧',n:'Maintenance Helper',t:'Handyman'},{i:'🏭',n:'Factory Worker',t:'Shift work'}],
+  admin:[{i:'💼',n:'Receptionist',t:'Hiring Now'},{i:'📋',n:'Office Clerk',t:'Entry Level'},{i:'📞',n:'Call Centre',t:'Inbound'},{i:'📊',n:'Data Capturer',t:'Excel req.'},{i:'📁',n:'Filing Clerk',t:'Part-time'},{i:'🖨️',n:'Admin Assistant',t:'Diploma req.'}],
+  hospitality:[{i:'🍽️',n:'Waiter/Waitress',t:'Hiring Now'},{i:'👨‍🍳',n:'Kitchen Helper',t:'Entry Level'},{i:'☕',n:'Barista',t:'Coffee skills'},{i:'🏨',n:'Hotel Staff',t:'Hospitality'},{i:'🍕',n:'Fast Food Staff',t:'Weekends'},{i:'🧴',n:'Bar Assistant',t:'21+'}],
+};
+
+/* ─── STATE ──────────────────────────────────────── */
+let curTpl = 'general';
+let photoData = null;
+
+/* ─── HELPERS ─────────────────────────────────────── */
+const $  = id => document.getElementById(id);
+const v  = id => $( id).value.trim();
+const e  = s  => !s ? '' : s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const ln = (txt,cls='sx') => txt.split('\n').filter(l=>l.trim()).map(l=>`<p class="${cls}">${e(l)}</p>`).join('');
+
+/* ─── TEMPLATE SELECT ─────────────────────────────── */
+function pickTpl(btn){
+  document.querySelectorAll('.tpl-tile').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  curTpl = btn.dataset.t;
+  const af = AF[curTpl]||AF.general;
+  if(!v('fj'))  $('fj').value  = af.job   ||'';
+  if(!v('fsk')) $('fsk').value = af.skills||'';
+  if(!v('fex')) $('fex').value = af.exp   ||'';
+  if(!v('fed')) $('fed').value = af.edu   ||'';
+  render(); buildJobMatch();
+}
+
+/* ─── PHOTO ───────────────────────────────────────── */
+function togglePhoto(){
+  $('photo-card').style.display = $('tog-photo').checked ? 'block' : 'none';
+}
+function loadPhoto(ev){
+  const f = ev.target.files[0];
+  if(!f) return;
+  if(f.size > 5*1024*1024){ toast('⚠️ Photo too large. Max 5MB.'); return; }
+  const r = new FileReader();
+  r.onload = ev2 => {
+    photoData = ev2.target.result;
+    $('photo-prev').src = photoData;
+    $('photo-prev').classList.add('on');
+    $('ph-ico').style.display = 'none';
+    $('ph-rm').classList.add('on');
+    render();
+  };
+  r.readAsDataURL(f);
+}
+function rmPhoto(ev){
+  ev.preventDefault(); ev.stopPropagation();
+  photoData = null;
+  $('photo-prev').classList.remove('on');
+  $('ph-ico').style.display = 'block';
+  $('ph-rm').classList.remove('on');
+  $('ph-in').value = '';
+  render();
+}
+
+/* ─── SMART SUGGEST ──────────────────────────────── */
+function smartSuggest(val){
+  const box = $('sug-box'), list = $('sug-list');
+  if(!val||val.length<2){ box.classList.remove('on'); return; }
+  const v2 = val.toLowerCase();
+  let items = [];
+  for(const [k,arr] of Object.entries(SUGG)){
+    if(v2.includes(k.slice(0,4))||k.includes(v2.slice(0,4))){
+      items.push(...arr);
+    }
+  }
+  // search by text
+  for(const arr of Object.values(SUGG)){
+    for(const s of arr){
+      if(s.t.toLowerCase().includes(v2) && !items.find(x=>x.t===s.t)) items.push(s);
+    }
+  }
+  if(!items.length){ box.classList.remove('on'); return; }
+  items = items.slice(0,4);
+  list.innerHTML = items.map(s=>
+    `<div class="sug-item" onclick="useSugg('${s.t.replace(/'/g,"\\'")}')">
+      <span class="si-ico">${s.i}</span>
+      <span><strong>${s.t}</strong> <span style="color:#bbb;font-size:11px;">· ${s.d}</span></span>
+    </div>`).join('');
+  box.classList.add('on');
+}
+function useSugg(t){
+  $('fj').value = t;
+  $('sug-box').classList.remove('on');
+  render();
+}
+document.addEventListener('click', ev=>{
+  if(!ev.target.closest('#fj')&&!ev.target.closest('#sug-box'))
+    $('sug-box').classList.remove('on');
+});
+
+/* ─── RENDER ENGINE ──────────────────────────────── */
+function render(){
+  const name  = v('fn'), phone = v('fp'), email = v('fe');
+  const loc   = v('fl'),  job   = v('fj'), nat   = v('fnat');
+  const exp   = v('fex'), sk    = v('fsk'), edu   = v('fed'), ref = v('fref');
+  const usePhoto = $('tog-photo').checked;
+  const useCl    = $('tog-color').checked;
+  const tpl = TPL[curTpl]||TPL.general;
+  const hc  = useCl ? tpl.c : '#0a0a0a';
+  const ac  = tpl.a;
+
+  if(!name&&!phone&&!job){
+    $('pv-box').innerHTML=`<div class="empty-pv"><div class="ei">📋</div><p>Your CV appears here as you type.<br><br><strong>Fill in your details to begin!</strong></p></div>`;
+    return;
+  }
+
+  const init = name ? name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2) : '??';
+  const skArr = sk ? sk.split('\n').filter(s=>s.trim()) : [];
+  const layout = usePhoto ? 'a' : tpl.lay;
+  const showImg = usePhoto && photoData;
+
+  let html = '';
+
+  if(layout==='a'){
+    // SIDEBAR LAYOUT
+    const photoEl = showImg
+      ? `<img src="${photoData}" style="width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.45);margin:0 auto 8px;display:block;">`
+      : `<div class="av" style="background:${ac};color:#000;width:88px;height:88px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:32px;margin:0 auto 8px;">${init}</div>`;
+
+    html = `<div class="cva" style="background:#fff;">
+      <div class="sb" style="background:${hc};">
+        ${photoEl}
+        <div class="cvname">${e(name)||'Your Name'}</div>
+        <div class="cvrole" style="color:${ac};">${e(job)||tpl.lbl}</div>
+        <div class="sb-sec">
+          <div class="sb-t">Contact</div>
+          ${phone?`<div class="sb-i">📞 ${e(phone)}</div>`:''}
+          ${email?`<div class="sb-i">✉️ ${e(email)}</div>`:''}
+          ${loc?`<div class="sb-i">📍 ${e(loc)}</div>`:''}
+          ${nat?`<div class="sb-i">🇿🇦 ${e(nat)}</div>`:''}
+        </div>
+        ${skArr.length?`<div class="sb-sec"><div class="sb-t">Skills</div>${skArr.map(s=>`<span class="sp">${e(s.trim())}</span>`).join('')}</div>`:''}
+      </div>
+      <div class="mn">
+        <div class="mn-name" style="color:${hc};">${e(name)||'Your Name'}</div>
+        <div class="mn-role" style="color:${ac};">${e(job)||tpl.lbl}</div>
+        <div class="div" style="background:${ac};"></div>
+        <div style="margin-bottom:12px;">
+          <div class="st" style="color:${hc};">Professional Summary</div>
+          <p class="sx">I am a dedicated and hardworking ${e(job)||'professional'}${loc?' based in '+e(loc):''}. I am reliable, punctual and committed to delivering excellent results in any team or organisation.</p>
+        </div>
+        ${exp?`<div style="margin-bottom:12px;"><div class="st" style="color:${hc};">Work Experience</div>${ln(exp)}</div>`:''}
+        ${edu?`<div style="margin-bottom:12px;"><div class="st" style="color:${hc};">Education & Training</div>${ln(edu)}</div>`:''}
+        ${ref?`<div style="margin-bottom:12px;"><div class="st" style="color:${hc};">References</div>${ln(ref)}</div>`:''}
+        <div class="cv-foot">Generated by ${BRAND.name} · ${BRAND.site}</div>
+      </div>
+    </div>`;
+
+  } else {
+    // BANNER LAYOUT
+    const photoEl = showImg
+      ? `<img src="${photoData}" style="width:78px;height:78px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.4);flex-shrink:0;">`
+      : `<div class="av2" style="background:${ac};color:#000;width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:28px;flex-shrink:0;">${init}</div>`;
+
+    const chips = skArr.map(s=>`<span class="bsk" style="background:${hc}1a;color:${hc};border:1px solid ${hc}33;">${e(s.trim())}</span>`).join('');
+
+    html = `<div class="cvb" style="background:#fff;">
+      <div class="top" style="background:${hc};">
+        ${photoEl}
+        <div class="top-t">
+          <div class="bn">${e(name)||'Your Name'}</div>
+          <div class="br" style="color:${ac};">${e(job)||tpl.lbl}</div>
+          ${loc?`<div class="bl">📍 ${e(loc)}</div>`:''}
+        </div>
+      </div>
+      <div class="cstrip" style="background:${hc}10;border-bottom:2px solid ${ac}22;">
+        ${phone?`<span class="ci">📞 ${e(phone)}</span>`:''}
+        ${email?`<span class="ci">✉️ ${e(email)}</span>`:''}
+        ${nat?`<span class="ci">🇿🇦 ${e(nat)}</span>`:''}
+      </div>
+      <div class="body">
+        <div class="bsec">
+          <div class="bst" style="color:${hc};border-bottom:2px solid ${ac};">Professional Summary</div>
+          <p class="bt">I am a dedicated and hardworking ${e(job)||'professional'}${loc?' based in '+e(loc):''}. I am reliable, punctual and committed to delivering excellent results for any employer or organisation.</p>
+        </div>
+        ${exp?`<div class="bsec"><div class="bst" style="color:${hc};border-bottom:2px solid ${ac};">Work Experience</div>${ln(exp,'bt')}</div>`:''}
+        ${skArr.length?`<div class="bsec"><div class="bst" style="color:${hc};border-bottom:2px solid ${ac};">Skills & Qualifications</div><div style="margin-top:6px;">${chips}</div></div>`:''}
+        ${edu?`<div class="bsec"><div class="bst" style="color:${hc};border-bottom:2px solid ${ac};">Education & Training</div>${ln(edu,'bt')}</div>`:''}
+        ${ref?`<div class="bsec"><div class="bst" style="color:${hc};border-bottom:2px solid ${ac};">References</div>${ln(ref,'bt')}</div>`:''}
+      </div>
+      <div class="cv-foot">Generated by ${BRAND.name} · ${BRAND.site}</div>
+    </div>`;
+  }
+
+  $('pv-box').innerHTML = html;
+
+  // Update step indicators
+  if(name){ $('ps1').classList.add('done'); $('ps2').classList.add('on'); }
+  if(exp||sk){ $('ps2').classList.add('done'); $('ps3').classList.add('on'); }
+
+  buildJobMatch();
+}
+
+/* ─── JOB MATCH ──────────────────────────────────── */
+function buildJobMatch(){
+  const jmc = $('jm-card'), jmg = $('jm-grid');
+  if(!v('fn')){ jmc.classList.remove('on'); return; }
+  const jobs = JMATCH[curTpl] || JMATCH.general;
+  jmg.innerHTML = jobs.map(j=>
+    `<div class="jm-tile" onclick="searchJob('${j.n}')">
+      <div class="jm-ico">${j.i}</div>
+      <div class="jm-name">${j.n}</div>
+      <div class="jm-tag">${j.t}</div>
+    </div>`).join('');
+  jmc.classList.add('on');
+}
+function searchJob(t){
+  window.open(`https://www.google.com/search?q=${encodeURIComponent(t+' jobs South Africa 2024')}`, '_blank');
+}
+
+/* ─── DRAFT / LOCAL STORAGE ──────────────────────── */
+function saveDraft(){
+  if(!$('tog-save').checked) return;
+  const data = {
+    fn:v('fn'),fp:v('fp'),fe:v('fe'),fl:v('fl'),fj:v('fj'),
+    fnat:v('fnat'),fid:v('fid'),fex:v('fex'),fsk:v('fsk'),
+    fed:v('fed'),fref:v('fref'),tpl:curTpl,
+    photo:$('tog-photo').checked,color:$('tog-color').checked,
+    saved:new Date().toLocaleTimeString()
+  };
+  try{
+    localStorage.setItem('pptech_cv_draft', JSON.stringify(data));
+    $('draft-badge').style.display = 'block';
+    toast('💾 Draft saved!');
+  } catch(err){ toast('⚠️ Could not save draft.'); }
+}
+function autosave(){
+  if($('tog-save').checked) setTimeout(saveDraft, 1200);
+}
+function loadDraft(){
+  try{
+    const d = JSON.parse(localStorage.getItem('pptech_cv_draft'));
+    if(!d) return;
+    ['fn','fp','fe','fl','fj','fnat','fid','fex','fsk','fed','fref'].forEach(k=>{ if(d[k]) $(k).value=d[k]; });
+    if(d.tpl){
+      const btn = document.querySelector(`[data-t="${d.tpl}"]`);
+      if(btn){ document.querySelectorAll('.tpl-tile').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); curTpl=d.tpl; }
+    }
+    $('tog-photo').checked = !!d.photo;
+    $('tog-color').checked = d.color !== false;
+    togglePhoto(); render();
+    toast('📂 Draft loaded!');
+  } catch(err){ toast('⚠️ No draft found.'); }
+}
+// Check for existing draft on load
+window.addEventListener('DOMContentLoaded',()=>{
+  try{
+    const d = localStorage.getItem('pptech_cv_draft');
+    if(d){ $('draft-badge').style.display='block'; }
+  } catch(e){}
+});
+
+/* ─── BUILD PRINT-READY HTML ─────────────────────── */
+function getPrintHTML(title){
+  const tpl = TPL[curTpl]||TPL.general;
+  const cv = $('pv-box').innerHTML;
+  return `<!DOCTYPE html><html><head>
+<meta charset="UTF-8"><title>${e(title)} — CV</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&family=Barlow:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Barlow',sans-serif;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.cva{display:flex;min-height:100vh;}
+.cva .sb{width:165px;flex-shrink:0;padding:22px 14px;display:flex;flex-direction:column;gap:12px;}
+.cva .mn{flex:1;padding:22px 20px;}
+.cvname{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:#fff;text-align:center;line-height:1.1;}
+.cvrole{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-align:center;margin-top:2px;opacity:.75;}
+.sb-sec{margin-top:0;}
+.sb-t{font-size:8px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.5;margin-bottom:4px;padding-bottom:2px;border-bottom:1px solid rgba(255,255,255,.15);}
+.sb-i{font-size:10px;color:rgba(255,255,255,.85);margin-bottom:2px;word-break:break-all;}
+.sp{display:inline-block;font-size:8px;font-weight:700;padding:2px 5px;border-radius:6px;margin:2px 1px;background:rgba(255,255,255,.18);color:#fff;}
+.mn-name{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1.5px;line-height:1;}
+.mn-role{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+.div{height:2px;border-radius:2px;margin:11px 0;}
+.st{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.sx{font-size:11px;color:#444;margin-bottom:3px;line-height:1.5;}
+.av{display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:32px;}
+.cv-foot{padding:5px 20px;text-align:right;font-size:8px;color:#bbb;border-top:1px solid #eee;margin-top:8px;}
+.cvb .top{padding:20px 24px;display:flex;align-items:center;gap:16px;}
+.av2{display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:28px;flex-shrink:0;}
+.bn{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1.5px;color:#fff;line-height:1;}
+.br{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:3px;}
+.bl{font-size:10px;color:rgba(255,255,255,.55);margin-top:2px;}
+.cstrip{padding:7px 24px;display:flex;flex-wrap:wrap;gap:12px;font-size:10px;font-weight:600;}
+.ci{display:flex;align-items:center;gap:4px;}
+.body{padding:14px 24px;}
+.bsec{margin-bottom:13px;}
+.bst{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding-bottom:4px;margin-bottom:6px;}
+.bt{font-size:11px;color:#444;margin-bottom:3px;line-height:1.5;}
+.bsk{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:8px;margin:2px 2px;}
+@media print{body{margin:0;}}
+</style></head><body>${cv}</body></html>`;
+}
+
+/* ─── DOWNLOAD PDF ───────────────────────────────── */
+function dlPDF(){
+  const name = v('fn');
+  if(!name){ toast('⚠️ Enter your name first!'); return; }
+  const win = window.open('','_blank');
+  if(!win){ toast('⚠️ Allow popups to download PDF'); return; }
+  win.document.write(getPrintHTML(name));
+  win.document.close();
+  setTimeout(()=>{ win.focus(); win.print(); }, 900);
+  $('ps4').classList.add('on','done');
+  toast('🖨️ Print dialog opened — choose "Save as PDF"');
+}
+
+/* ─── DOWNLOAD WORD (.doc) ───────────────────────── */
+function dlWord(){
+  const name = v('fn');
+  if(!name){ toast('⚠️ Enter your name first!'); return; }
+
+  // Build plain-text structured Word-compatible HTML
+  const tpl = TPL[curTpl]||TPL.general;
+  const hc = $('tog-color').checked ? tpl.c : '#0a0a0a';
+  const ac = tpl.a;
+  const phone=v('fp'),email=v('fe'),loc=v('fl'),job=v('fj'),nat=v('fnat');
+  const exp=v('fex'),sk=v('fsk'),edu=v('fed'),ref=v('fref');
+  const skArr = sk ? sk.split('\n').filter(s=>s.trim()) : [];
+
+  const wordHTML = `
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="UTF-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 15">
+<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
+<style>
+  @page { size: A4; margin: 2cm 2cm 2cm 2cm; }
+  body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; color: #222; line-height: 1.4; }
+  h1 { font-size: 24pt; color: ${hc}; margin: 0; letter-spacing: 2px; }
+  h2 { font-size: 11pt; color: ${ac}; margin: 2pt 0 12pt; letter-spacing: 2px; text-transform: uppercase; }
+  h3 { font-size: 10pt; font-weight: bold; color: ${hc}; border-bottom: 2pt solid ${ac}; padding-bottom: 3pt; margin: 14pt 0 6pt; letter-spacing: 1.5px; text-transform: uppercase; }
+  p { margin: 2pt 0; font-size: 10.5pt; color: #333; }
+  .contact-line { font-size: 10pt; color: #555; margin: 8pt 0; }
+  .divider { border-top: 2pt solid ${ac}; margin: 10pt 0; }
+  .skill-item { display: inline-block; background: ${hc}15; color: ${hc}; border: 1pt solid ${hc}30; border-radius: 4pt; padding: 1pt 6pt; font-size: 9pt; font-weight: bold; margin: 1pt 2pt; }
+  .footer-line { font-size: 8pt; color: #aaa; text-align: right; margin-top: 20pt; border-top: 1pt solid #eee; padding-top: 5pt; }
+</style>
+</head>
+<body>
+<h1>${e(name)}</h1>
+<h2>${e(job)||tpl.lbl}</h2>
+<div class="contact-line">
+  ${phone?`📞 ${e(phone)} &nbsp;`:''} ${email?`✉️ ${e(email)} &nbsp;`:''} ${loc?`📍 ${e(loc)} &nbsp;`:''} ${nat?`🇿🇦 ${e(nat)}`:''}
+</div>
+<div class="divider"></div>
+
+<h3>Professional Summary</h3>
+<p>I am a dedicated and hardworking ${e(job)||'professional'}${loc?' based in '+e(loc):''}. I am reliable, punctual and committed to delivering excellent results for any employer or organisation.</p>
+
+${exp?`<h3>Work Experience</h3>${exp.split('\n').filter(l=>l.trim()).map(l=>`<p>${e(l)}</p>`).join('')}`:''}
+
+${skArr.length?`<h3>Skills &amp; Qualifications</h3><p>${skArr.map(s=>`<span class="skill-item">${e(s.trim())}</span>`).join(' ')}</p>`:''}
+
+${edu?`<h3>Education &amp; Training</h3>${edu.split('\n').filter(l=>l.trim()).map(l=>`<p>${e(l)}</p>`).join('')}`:''}
+
+${ref?`<h3>References</h3>${ref.split('\n').filter(l=>l.trim()).map(l=>`<p>${e(l)}</p>`).join('')}`:''}
+
+<div class="footer-line">Generated by ${BRAND.name} &nbsp;|&nbsp; ${BRAND.phone} &nbsp;|&nbsp; ${BRAND.site}</div>
+</body></html>`;
+
+  const blob = new Blob([wordHTML], {type:'application/msword'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${name.replace(/\s+/g,'-')}-CV.doc`;
+  a.click();
+  URL.revokeObjectURL(url);
+  $('ps4').classList.add('on','done');
+  toast('📝 Word file downloaded!');
+}
+
+/* ─── DOWNLOAD HTML ──────────────────────────────── */
+function dlHTML(){
+  const name = v('fn');
+  if(!name){ toast('⚠️ Enter your name first!'); return; }
+  const content = `<!DOCTYPE html><html><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${e(name)} — CV</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&family=Barlow:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Barlow',sans-serif;background:#f0f0f0;display:flex;justify-content:center;padding:20px;min-height:100vh;}
+.wrap{background:#fff;max-width:780px;width:100%;box-shadow:0 4px 30px rgba(0,0,0,.15);border-radius:10px;overflow:hidden;}
+.cva{display:flex;}.cva .sb{width:165px;flex-shrink:0;padding:22px 14px;display:flex;flex-direction:column;gap:12px;}.cva .mn{flex:1;padding:22px 20px;}
+.cvname{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:#fff;text-align:center;}.cvrole{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-align:center;opacity:.75;}
+.sb-sec{margin-top:0;}.sb-t{font-size:8px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.5;margin-bottom:4px;padding-bottom:2px;border-bottom:1px solid rgba(255,255,255,.15);}
+.sb-i{font-size:10px;color:rgba(255,255,255,.85);margin-bottom:2px;word-break:break-all;}.sp{display:inline-block;font-size:8px;font-weight:700;padding:2px 5px;border-radius:6px;margin:2px 1px;background:rgba(255,255,255,.18);color:#fff;}
+.mn-name{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1.5px;}.mn-role{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+.div{height:2px;border-radius:2px;margin:11px 0;}.st{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}.sx{font-size:11px;color:#444;margin-bottom:3px;line-height:1.5;}
+.av{display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:32px;}.cv-foot{padding:5px 20px;text-align:right;font-size:8px;color:#bbb;border-top:1px solid #eee;margin-top:8px;}
+.cvb .top{padding:20px 24px;display:flex;align-items:center;gap:16px;}.av2{display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:28px;flex-shrink:0;}
+.bn{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1.5px;color:#fff;}.br{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:3px;}
+.bl{font-size:10px;color:rgba(255,255,255,.55);margin-top:2px;}.cstrip{padding:7px 24px;display:flex;flex-wrap:wrap;gap:12px;font-size:10px;font-weight:600;}.ci{display:flex;align-items:center;gap:4px;}
+.body{padding:14px 24px;}.bsec{margin-bottom:13px;}.bst{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding-bottom:4px;margin-bottom:6px;}
+.bt{font-size:11px;color:#444;margin-bottom:3px;line-height:1.5;}.bsk{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:8px;margin:2px 2px;}
+@media(max-width:520px){.cva{flex-direction:column;}.cva .sb{width:100%;}}
+</style></head><body><div class="wrap">${$('pv-box').innerHTML}</div></body></html>`;
+  const blob = new Blob([content],{type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${name.replace(/\s+/g,'-')}-CV.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('💾 HTML file downloaded!');
+}
+
+/* ─── COPY TEXT ──────────────────────────────────── */
+function copyText(){
+  const name=v('fn');
+  if(!name){ toast('⚠️ Enter your name first!'); return; }
+  const txt = [
+    '══════════════════════════',
+    '   CURRICULUM VITAE',
+    '══════════════════════════',
+    '',
+    `NAME: ${v('fn')}`,
+    v('fp')?`PHONE: ${v('fp')}`:'',
+    v('fe')?`EMAIL: ${v('fe')}`:'',
+    v('fl')?`LOCATION: ${v('fl')}`:'',
+    v('fj')?`APPLYING FOR: ${v('fj')}`:'',
+    v('fnat')?`NATIONALITY: ${v('fnat')}`:'',
+    '',
+    '--- WORK EXPERIENCE ---',
+    v('fex')||'Not provided',
+    '',
+    '--- SKILLS ---',
+    v('fsk')||'Not provided',
+    v('fed')?`\n--- EDUCATION ---\n${v('fed')}`:'',
+    v('fref')?`\n--- REFERENCES ---\n${v('fref')}`:'',
+    '',
+    '─────────────────────────',
+    `Generated by ${BRAND.name}`,
+    `📞 ${BRAND.phone}`,
+    `✉️ ${BRAND.email}`,
+    '─────────────────────────',
+  ].filter(l=>l!==undefined).join('\n');
+
+  navigator.clipboard.writeText(txt).then(()=>{
+    toast('📋 CV text copied! Paste into WhatsApp or email.');
+  }).catch(()=>{
+    const ta = document.createElement('textarea');
+    ta.value = txt;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    toast('📋 Copied! Paste into WhatsApp.');
+  });
+}
+
+/* ─── WHATSAPP ───────────────────────────────────── */
+function waHelp(){
+  const name=v('fn'), job=v('fj');
+  const msg=`Hi ${BRAND.name}! 👋\n\nMy name is *${name||'[Name]'}* and I need help improving my CV for a *${job||'job'}* application.\n\nCan you assist me please? 🙏`;
+  window.open(`https://wa.me/${BRAND.wa}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+function waPro(){
+  const name=v('fn');
+  const msg=`Hi ${BRAND.name}! 💼\n\nMy name is *${name||'[Name]'}* and I'm interested in your *Professional CV Upgrade Service*.\n\nPlease assist me! 🙏`;
+  window.open(`https://wa.me/${BRAND.wa}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+/* ─── TOAST ──────────────────────────────────────── */
+function toast(msg){
+  const t=$('toast');
+  t.textContent=msg;
+  t.classList.add('on');
+  clearTimeout(t._tid);
+  t._tid=setTimeout(()=>t.classList.remove('on'),3000);
+}
+
+/* ─── INIT ───────────────────────────────────────── */
+render();
+</script>
+</body>
+</html>

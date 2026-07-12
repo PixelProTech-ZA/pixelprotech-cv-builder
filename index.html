@@ -11,6 +11,7 @@
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
 <title>PIXEL CV Builder — PixelProTech Solutions</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&family=Barlow:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ════════════════════════════════════════
@@ -1070,13 +1071,76 @@ body{font-family:'Barlow',sans-serif;background:#fff;-webkit-print-color-adjust:
 function dlPDF(){
   const name = v('fn');
   if(!name){ toast('⚠️ Enter your name first!'); return; }
-  const win = window.open('','_blank');
-  if(!win){ toast('⚠️ Allow popups to download PDF'); return; }
-  win.document.write(getPrintHTML(name));
-  win.document.close();
-  setTimeout(()=>{ win.focus(); win.print(); }, 900);
-  $('ps4').classList.add('on','done');
-  toast('🖨️ Print dialog opened — choose "Save as PDF"');
+
+  // Build the print-styled CV in an off-screen container (not a popup window),
+  // so html2pdf can rasterize it directly — no browser print chrome involved.
+  const holder = document.createElement('div');
+  holder.style.position='fixed';
+  holder.style.left='-99999px';
+  holder.style.top='0';
+  holder.style.width='794px'; // A4 @ 96dpi
+  holder.style.background='#fff';
+
+  const styleTag = document.createElement('style');
+  styleTag.textContent = `
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body,.pdf-root{font-family:'Barlow',sans-serif;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .cva{display:flex;min-height:100%;}
+    .cva .sb{width:165px;flex-shrink:0;padding:22px 14px;display:flex;flex-direction:column;gap:12px;}
+    .cva .mn{flex:1;padding:22px 20px;}
+    .cvname{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:#fff;text-align:center;line-height:1.1;}
+    .cvrole{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-align:center;margin-top:2px;opacity:.75;}
+    .sb-sec{margin-top:0;}
+    .sb-t{font-size:8px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.5;margin-bottom:4px;padding-bottom:2px;border-bottom:1px solid rgba(255,255,255,.15);}
+    .sb-i{font-size:10px;color:rgba(255,255,255,.85);margin-bottom:2px;word-break:break-all;}
+    .sp{display:inline-block;font-size:8px;font-weight:700;padding:2px 5px;border-radius:6px;margin:2px 1px;background:rgba(255,255,255,.18);color:#fff;}
+    .mn-name{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1.5px;line-height:1;}
+    .mn-role{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+    .div{height:2px;border-radius:2px;margin:11px 0;}
+    .st{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+    .sx{font-size:11px;color:#444;margin-bottom:3px;line-height:1.5;}
+    .av{display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:32px;}
+    .cv-foot{padding:5px 20px;text-align:right;font-size:8px;color:#bbb;border-top:1px solid #eee;margin-top:8px;}
+    .cvb .top{padding:20px 24px;display:flex;align-items:center;gap:16px;}
+    .av2{display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:28px;flex-shrink:0;}
+    .bn{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1.5px;color:#fff;line-height:1;}
+    .br{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:3px;}
+    .bl{font-size:10px;color:rgba(255,255,255,.55);margin-top:2px;}
+    .cstrip{padding:7px 24px;display:flex;flex-wrap:wrap;gap:12px;font-size:10px;font-weight:600;}
+    .ci{display:flex;align-items:center;gap:4px;}
+    .body{padding:14px 24px;}
+    .bsec{margin-bottom:13px;}
+    .bst{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding-bottom:4px;margin-bottom:6px;}
+    .bt{font-size:11px;color:#444;margin-bottom:3px;line-height:1.5;}
+    .bsk{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:8px;margin:2px 2px;}
+  `;
+  holder.appendChild(styleTag);
+
+  const inner = document.createElement('div');
+  inner.className = 'pdf-root';
+  inner.innerHTML = $('pv-box').innerHTML;
+  holder.appendChild(inner);
+  document.body.appendChild(holder);
+
+  toast('🖨️ Building your PDF…');
+
+  const opt = {
+    margin: 0,
+    filename: `${name.replace(/\s+/g,'-')}-CV.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+    jsPDF: { unit: 'px', format: [794, 1123], orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  };
+
+  html2pdf().set(opt).from(inner).save().then(()=>{
+    document.body.removeChild(holder);
+    $('ps4').classList.add('on','done');
+    toast('✅ Clean PDF downloaded — no browser header/footer!');
+  }).catch(()=>{
+    document.body.removeChild(holder);
+    toast('⚠️ Could not generate PDF — try again');
+  });
 }
 
 /* ─── DOWNLOAD WORD (.doc) ───────────────────────── */

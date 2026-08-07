@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1180">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0a0a0a">
 <meta name="description" content="Free CV Builder by Pixel Pro Tech Solutions – Build a professional CV in 60 seconds. South Africa's #1 free CV tool.">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -671,6 +671,8 @@ footer strong{color:var(--G);}
 
 <!-- TRUST BAR -->
 <div class="trust">
+  <div class="ti2"><span>✅</span>Registered Company</div>
+  <div class="ti2"><span>🏆</span>B-BBEE Level 1</div>
   <div class="ti2"><span>🔒</span>No data stored</div>
   <div class="ti2"><span>⚡</span>Instant results</div>
   <div class="ti2"><span>📱</span>Any phone</div>
@@ -687,6 +689,7 @@ footer strong{color:var(--G);}
     <a href="#">🌐 pixelprotechsolutions.co.za</a>
   </div>
   <p style="margin-top:10px;font-size:10px;color:#222;">CV Builder v3.0 · No login · Works offline · Built with HTML, CSS & JavaScript</p>
+  <p style="margin-top:6px;font-size:9px;color:#333;">PixelProTech Solutions (Pty) Ltd &nbsp;·&nbsp; Reg. No. 2026/622131/07 &nbsp;·&nbsp; B-BBEE Level 1 Contributor</p>
 </footer>
 
 <!-- ════════════════════════════════════════════════════════
@@ -1099,13 +1102,18 @@ function dlPDF(){
   const eduArr = edu ? edu.split('\n').filter(l=>l.trim()) : [];
   const refArr = ref ? ref.split('\n').filter(l=>l.trim()) : [];
   const init = name.split(' ').filter(Boolean).map(w=>w[0]).join('').toUpperCase().slice(0,2) || '??';
-  const usePhoto = $('tog-photo').checked && photoData;
+  // Match render() exactly: the toggle alone forces the sidebar layout
+  // (falling back to initials if no image was actually uploaded yet);
+  // usePhoto controls whether we embed a real image vs. draw initials.
+  const wantPhoto = $('tog-photo').checked;
+  const usePhoto = wantPhoto && photoData;
 
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const PW = 210, PH = 297, M = 14;
   const [hr,hg,hb] = hexToRgb(hc);
   const [ar,ag,ab] = hexToRgb(ac);
+  const layout = wantPhoto ? 'a' : tpl.lay;
 
   // Wrap + auto-page-break line writer. Returns the updated y.
   function writeBlock(lines, x, y, w, size, color, lh){
@@ -1122,7 +1130,7 @@ function dlPDF(){
     return y;
   }
 
-  if(tpl.lay === 'a'){
+  if(layout === 'a'){
     /* ══ SIDEBAR LAYOUT ══ */
     const SB_W = 62;
     doc.setFillColor(hr,hg,hb);
@@ -1164,12 +1172,24 @@ function dlPDF(){
 
     if(skArr.length){
       sbHeader('Skills');
-      doc.setFont('helvetica','normal'); doc.setFontSize(7.5); doc.setTextColor(255,255,255);
+      doc.setFont('helvetica','bold'); doc.setFontSize(7);
+      // Pre-blend white-at-18%-opacity onto the sidebar background,
+      // to mimic the screen's rgba(255,255,255,.18) pill chips.
+      const chipR = hr + (255-hr)*0.18, chipG = hg + (255-hg)*0.18, chipB = hb + (255-hb)*0.18;
+      let cx = 6, cy = sy;
+      const rowH = 5;
       skArr.forEach(item=>{
-        doc.splitTextToSize('• '+item.trim(), SB_W-12).forEach(l=>{
-          if(sy < PH-8){ doc.text(l, 6, sy); sy+=3.7; }
-        });
+        const label = item.trim();
+        const tw = doc.getTextWidth(label) + 5;
+        if(cx + tw > SB_W - 6){ cx = 6; cy += rowH; }
+        if(cy > PH - 8) return; // stop if we'd run off the sidebar
+        doc.setFillColor(chipR, chipG, chipB);
+        doc.roundedRect(cx, cy-3.7, tw, 4.6, 1.4, 1.4, 'F');
+        doc.setTextColor(255,255,255);
+        doc.text(label, cx+2.5, cy-0.5);
+        cx += tw + 2;
       });
+      sy = cy + rowH;
     }
 
     let mx = SB_W + 10, my = 18;
@@ -1285,13 +1305,86 @@ function dlWord(){
   const name = v('fn');
   if(!name){ toast('⚠️ Enter your name first!'); return; }
 
-  // Build plain-text structured Word-compatible HTML
   const tpl = TPL[curTpl]||TPL.general;
   const hc = $('tog-color').checked ? tpl.c : '#0a0a0a';
   const ac = tpl.a;
   const phone=v('fp'),email=v('fe'),loc=v('fl'),job=v('fj'),nat=v('fnat');
   const exp=v('fex'),sk=v('fsk'),edu=v('fed'),ref=v('fref');
   const skArr = sk ? sk.split('\n').filter(s=>s.trim()) : [];
+  const init = name.split(' ').filter(Boolean).map(w=>w[0]).join('').toUpperCase().slice(0,2) || '??';
+
+  // Mirror render()'s rules exactly, so the Word layout matches the screen:
+  // a photo toggle always forces the sidebar layout, and only shows the
+  // real image if photo data was actually uploaded.
+  const wantPhoto = $('tog-photo').checked;
+  const layout = wantPhoto ? 'a' : tpl.lay;
+  const showImg = wantPhoto && photoData;
+
+  const avatarCell = showImg
+    ? `<img src="${photoData}" width="80" height="80" style="border-radius:50%;">`
+    : `<div style="width:80px;height:80px;border-radius:50%;background:${ac};color:#000;font-size:26pt;font-weight:bold;text-align:center;line-height:80px;font-family:Arial,sans-serif;">${e(init)}</div>`;
+
+  // Plain-text contact labels — Word's renderer frequently shows emoji as broken boxes.
+  const contactLines = [
+    phone && `Tel: ${e(phone)}`,
+    email && `Email: ${e(email)}`,
+    loc   && `Location: ${e(loc)}`,
+    nat   && `Nationality: ${e(nat)}`
+  ].filter(Boolean);
+
+  const summary = `I am a dedicated and hardworking ${e(job)||'professional'}${loc?' based in '+e(loc):''}. I am reliable, punctual and committed to delivering excellent results for any employer or organisation.`;
+
+  const skillChips = skArr.map(s=>`<span style="display:inline-block;background:${hc}15;color:${hc};border:1pt solid ${hc}40;border-radius:4pt;padding:2pt 7pt;font-size:9pt;font-weight:bold;margin:2pt 3pt 2pt 0;">${e(s.trim())}</span>`).join('');
+
+  const sections = (color) => `
+    <h3 style="font-size:10pt;font-weight:bold;color:${color};border-bottom:2pt solid ${ac};padding-bottom:3pt;margin:14pt 0 6pt;letter-spacing:1.5px;text-transform:uppercase;">Professional Summary</h3>
+    <p style="margin:2pt 0;font-size:10.5pt;color:#333;">${summary}</p>
+    ${exp?`<h3 style="font-size:10pt;font-weight:bold;color:${color};border-bottom:2pt solid ${ac};padding-bottom:3pt;margin:14pt 0 6pt;letter-spacing:1.5px;text-transform:uppercase;">Work Experience</h3>${exp.split('\n').filter(l=>l.trim()).map(l=>`<p style="margin:2pt 0;font-size:10.5pt;color:#333;">${e(l)}</p>`).join('')}`:''}
+    ${edu?`<h3 style="font-size:10pt;font-weight:bold;color:${color};border-bottom:2pt solid ${ac};padding-bottom:3pt;margin:14pt 0 6pt;letter-spacing:1.5px;text-transform:uppercase;">Education &amp; Training</h3>${edu.split('\n').filter(l=>l.trim()).map(l=>`<p style="margin:2pt 0;font-size:10.5pt;color:#333;">${e(l)}</p>`).join('')}`:''}
+    ${ref?`<h3 style="font-size:10pt;font-weight:bold;color:${color};border-bottom:2pt solid ${ac};padding-bottom:3pt;margin:14pt 0 6pt;letter-spacing:1.5px;text-transform:uppercase;">References</h3>${ref.split('\n').filter(l=>l.trim()).map(l=>`<p style="margin:2pt 0;font-size:10.5pt;color:#333;">${e(l)}</p>`).join('')}`:''}
+  `;
+
+  let bodyHTML;
+  if(layout === 'a'){
+    // SIDEBAR LAYOUT — a colour-banded left column, mirroring the screen's Layout A
+    bodyHTML = `
+    <table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;">
+      <tr>
+        <td valign="top" style="width:34%;background:${hc};padding:20pt 14pt;color:#fff;">
+          <div style="text-align:center;margin-bottom:8pt;">${avatarCell}</div>
+          <div style="text-align:center;font-size:15pt;font-weight:bold;font-family:Arial,sans-serif;letter-spacing:1px;">${e(name)}</div>
+          <div style="text-align:center;font-size:8.5pt;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:${ac};margin-top:2pt;">${e(job)||tpl.lbl}</div>
+          ${contactLines.length?`<div style="margin-top:14pt;font-size:7.5pt;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;opacity:.8;border-bottom:1pt solid rgba(255,255,255,.3);padding-bottom:3pt;margin-bottom:5pt;">Contact</div>${contactLines.map(l=>`<div style="font-size:9pt;margin-bottom:3pt;color:#fff;">${l}</div>`).join('')}`:''}
+          ${skArr.length?`<div style="margin-top:12pt;font-size:7.5pt;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;opacity:.8;border-bottom:1pt solid rgba(255,255,255,.3);padding-bottom:3pt;margin-bottom:5pt;">Skills</div>${skArr.map(s=>`<div style="display:inline-block;background:rgba(255,255,255,.18);color:#fff;border-radius:6pt;padding:2pt 6pt;font-size:8pt;font-weight:bold;margin:1pt 2pt 1pt 0;">${e(s.trim())}</div>`).join('')}`:''}
+        </td>
+        <td valign="top" style="width:66%;padding:20pt 18pt;">
+          <div style="font-size:22pt;font-weight:bold;color:${hc};font-family:Arial,sans-serif;letter-spacing:1px;">${e(name)}</div>
+          <div style="font-size:10pt;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:${ac};margin-top:2pt;">${e(job)||tpl.lbl}</div>
+          <div style="border-top:2pt solid ${ac};margin:8pt 0 10pt;"></div>
+          ${sections(hc)}
+        </td>
+      </tr>
+    </table>`;
+  } else {
+    // BANNER LAYOUT — full-width colour header, mirroring the screen's Layout B
+    bodyHTML = `
+    <table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;">
+      <tr><td style="background:${hc};padding:16pt 20pt;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td valign="middle">${avatarCell}</td>
+          <td valign="middle" style="padding-left:14pt;">
+            <div style="font-size:20pt;font-weight:bold;color:#fff;font-family:Arial,sans-serif;letter-spacing:1px;">${e(name)}</div>
+            <div style="font-size:9.5pt;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:${ac};margin-top:2pt;">${e(job)||tpl.lbl}</div>
+          </td>
+        </tr></table>
+      </td></tr>
+      ${contactLines.length?`<tr><td style="background:${hc}10;border-bottom:2pt solid ${ac}40;padding:6pt 20pt;font-size:9.5pt;color:#333;">${contactLines.join(' &nbsp;&nbsp;|&nbsp;&nbsp; ')}</td></tr>`:''}
+      <tr><td style="padding:14pt 20pt;">
+        ${sections(hc)}
+        ${skArr.length?`<h3 style="font-size:10pt;font-weight:bold;color:${hc};border-bottom:2pt solid ${ac};padding-bottom:3pt;margin:14pt 0 6pt;letter-spacing:1.5px;text-transform:uppercase;">Skills &amp; Qualifications</h3><p>${skillChips}</p>`:''}
+      </td></tr>
+    </table>`;
+  }
 
   const wordHTML = `
 <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
@@ -1301,38 +1394,13 @@ function dlWord(){
 <meta name=Generator content="Microsoft Word 15">
 <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
 <style>
-  @page { size: A4; margin: 2cm 2cm 2cm 2cm; }
+  @page { size: A4; margin: 1.5cm; }
   body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; color: #222; line-height: 1.4; }
-  h1 { font-size: 24pt; color: ${hc}; margin: 0; letter-spacing: 2px; }
-  h2 { font-size: 11pt; color: ${ac}; margin: 2pt 0 12pt; letter-spacing: 2px; text-transform: uppercase; }
-  h3 { font-size: 10pt; font-weight: bold; color: ${hc}; border-bottom: 2pt solid ${ac}; padding-bottom: 3pt; margin: 14pt 0 6pt; letter-spacing: 1.5px; text-transform: uppercase; }
-  p { margin: 2pt 0; font-size: 10.5pt; color: #333; }
-  .contact-line { font-size: 10pt; color: #555; margin: 8pt 0; }
-  .divider { border-top: 2pt solid ${ac}; margin: 10pt 0; }
-  .skill-item { display: inline-block; background: ${hc}15; color: ${hc}; border: 1pt solid ${hc}30; border-radius: 4pt; padding: 1pt 6pt; font-size: 9pt; font-weight: bold; margin: 1pt 2pt; }
-  .footer-line { font-size: 8pt; color: #aaa; text-align: right; margin-top: 20pt; border-top: 1pt solid #eee; padding-top: 5pt; }
 </style>
 </head>
 <body>
-<h1>${e(name)}</h1>
-<h2>${e(job)||tpl.lbl}</h2>
-<div class="contact-line">
-  ${phone?`📞 ${e(phone)} &nbsp;`:''} ${email?`✉️ ${e(email)} &nbsp;`:''} ${loc?`📍 ${e(loc)} &nbsp;`:''} ${nat?`🇿🇦 ${e(nat)}`:''}
-</div>
-<div class="divider"></div>
-
-<h3>Professional Summary</h3>
-<p>I am a dedicated and hardworking ${e(job)||'professional'}${loc?' based in '+e(loc):''}. I am reliable, punctual and committed to delivering excellent results for any employer or organisation.</p>
-
-${exp?`<h3>Work Experience</h3>${exp.split('\n').filter(l=>l.trim()).map(l=>`<p>${e(l)}</p>`).join('')}`:''}
-
-${skArr.length?`<h3>Skills &amp; Qualifications</h3><p>${skArr.map(s=>`<span class="skill-item">${e(s.trim())}</span>`).join(' ')}</p>`:''}
-
-${edu?`<h3>Education &amp; Training</h3>${edu.split('\n').filter(l=>l.trim()).map(l=>`<p>${e(l)}</p>`).join('')}`:''}
-
-${ref?`<h3>References</h3>${ref.split('\n').filter(l=>l.trim()).map(l=>`<p>${e(l)}</p>`).join('')}`:''}
-
-<div class="footer-line">Generated by ${BRAND.name} &nbsp;|&nbsp; ${BRAND.phone} &nbsp;|&nbsp; ${BRAND.site}</div>
+${bodyHTML}
+<div style="font-size:8pt;color:#aaa;text-align:right;margin-top:16pt;border-top:1pt solid #eee;padding-top:5pt;">Generated by ${BRAND.name} &nbsp;|&nbsp; ${BRAND.phone} &nbsp;|&nbsp; ${BRAND.site}</div>
 </body></html>`;
 
   const blob = new Blob([wordHTML], {type:'application/msword'});
@@ -1343,7 +1411,7 @@ ${ref?`<h3>References</h3>${ref.split('\n').filter(l=>l.trim()).map(l=>`<p>${e(l
   a.click();
   URL.revokeObjectURL(url);
   $('ps4').classList.add('on','done');
-  toast('📝 Word file downloaded!');
+  toast('📝 Word file downloaded — matches your on-screen design!');
 }
 
 /* ─── DOWNLOAD HTML ──────────────────────────────── */
